@@ -11,6 +11,7 @@ import android.widget.*;
 public class MainActivity extends AppCompatActivity {
     private Button toastButton;
     private Button sensorsButton;
+    private Button webRequestButton;
     private Button closeButton;
 
     @Override
@@ -37,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,
                         SensorsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        webRequestButton = (Button)findViewById(R.id.webreq_button);
+        webRequestButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        WebRequestActivity.class);
                 startActivity(intent);
             }
         });
