@@ -14,9 +14,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+
+import pt.iade.nathancampos.gamescopypasta.utilities.WebRequest;
 
 public class WebRequestsActivity extends AppCompatActivity {
-    public static String localhost = "http://10.0.2.2:5000";
     private EditText responseText;
     private Button getRequestButton;
 
@@ -39,7 +41,10 @@ public class WebRequestsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            String result = performGetRequest(localhost + "/");
+                            WebRequest webRequest = new WebRequest(
+                                    new URL(WebRequest.LOCALHOST + "/"));
+                            String result = webRequest.performGetRequest();
+
                             Log.d("WebRequest", "Finished GET web request");
                             responseText.setText(result);
                         } catch (Exception e) {
@@ -52,30 +57,5 @@ public class WebRequestsActivity extends AppCompatActivity {
                 Log.d("WebRequest", "GET request thread started");
             }
         });
-    }
-
-    public String performGetRequest(String strUrl) throws IOException {
-        URL url = new URL(strUrl);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        String result = null;
-
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            result = readStreamToString(in);
-        } finally {
-            urlConnection.disconnect();
-        }
-
-        return result;
-    }
-
-    public String readStreamToString(InputStream in) throws IOException {
-        BufferedInputStream bis = new BufferedInputStream(in);
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        for (int result = bis.read(); result != -1; result = bis.read()) {
-            buf.write((byte) result);
-        }
-
-        return buf.toString("UTF-8");
     }
 }
