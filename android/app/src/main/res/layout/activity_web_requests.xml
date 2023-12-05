@@ -34,9 +34,20 @@
         android:id="@+id/web_get_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:text="Perform GET Request"
         app:layout_constraintEnd_toEndOf="@+id/web_resp_text"
         app:layout_constraintStart_toStartOf="@+id/web_resp_text"
         app:layout_constraintTop_toBottomOf="@+id/web_resp_text" />
+
+    <Button
+        android:id="@+id/examples_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="More Examples"
+        app:layout_constraintEnd_toEndOf="@+id/web_resp_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/web_resp_text"
+        app:layout_constraintTop_toBottomOf="@+id/web_get_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

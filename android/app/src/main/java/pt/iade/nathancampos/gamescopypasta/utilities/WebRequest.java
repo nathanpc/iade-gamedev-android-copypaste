@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,7 +41,7 @@ public class WebRequest {
         return result;
     }
 
-    public String performPostRequest(String strUrl, HashMap<String, String> params) throws IOException, URISyntaxException {
+    public void performPostRequest(HashMap<String, String> params) throws IOException, URISyntaxException {
         String body = null;
         for (String key : params.keySet()) {
             if (body == null) {
@@ -53,25 +54,17 @@ public class WebRequest {
 
         URI uri = buildUri(null);
         HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
-        urlConnection.setDoOutput(true);
         urlConnection.setRequestMethod("POST");
-        urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        urlConnection.setRequestProperty("charset", "utf-8");
-        urlConnection.setRequestProperty("Content-Length", Integer.toString(postData.length));
+        //urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        //urlConnection.setRequestProperty("Content-Length", Integer.toString(postData.length));
         urlConnection.setUseCaches(false);
-        try (DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream())) {
-            wr.write(postData);
-        }
-
-        String result = null;
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            result = readStreamToString(in);
+        urlConnection.setDoOutput(true);
+        urlConnection.connect();
+        try(OutputStream os = urlConnection.getOutputStream()) {
+            os.write(postData, 0, postData.length);
         } finally {
             urlConnection.disconnect();
         }
-
-        return result;
     }
 
     protected String readStreamToString(InputStream in) throws IOException {

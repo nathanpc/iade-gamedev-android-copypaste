@@ -2,6 +2,7 @@ package pt.iade.nathancampos.gamescopypasta;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import pt.iade.nathancampos.gamescopypasta.utilities.WebRequest;
 public class WebRequestsActivity extends AppCompatActivity {
     private EditText responseText;
     private Button getRequestButton;
+    private Button moreExamplesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,13 @@ public class WebRequestsActivity extends AppCompatActivity {
 
                 thread.start();
                 Log.d("WebRequest", "GET request thread started");
+            }
+        });
+
+        moreExamplesButton = (Button)findViewById(R.id.examples_button);
+        moreExamplesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(WebRequestsActivity.this, ComplexWebRequestActivity.class));
             }
         });
     }
