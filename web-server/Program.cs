@@ -23,9 +23,12 @@ app.MapGet("/count", () =>
     return counter.ToString();
 });
 
-app.MapPost("set_string", (string some_string) =>
+app.MapPost("/set_string", (string some_string) =>
 {
+    string last_string = the_string;
     the_string = some_string;
+
+    return last_string + " => " + the_string;
 });
 
 app.MapGet("/get_string", () =>
